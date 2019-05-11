@@ -34,7 +34,7 @@ class TestRunner:
             output, errors = execution.communicate(timeout=self.timeout)
         except TimeoutExpired:
             execution.kill()
-            print(f'Input file "{input_file.name}" timed out\n')
+            print('Input file "{0}" timed out\n'.format(input_file.name))
             return False
 
         run_time = time.time() - start_time
@@ -43,24 +43,27 @@ class TestRunner:
         correct_output = output_file.readlines()
 
         if errors:
-            print(f'Input file "{input_file.name}" caused one or more errors:\n')
+            print('Input file "{0}" caused one or more errors:\n'.format(input_file.name))
             print(indent(errors, '    '))
             return False
 
         if output != correct_output:
-            print(f'Input file "{input_file.name}" gave incorrect output:\n')
+            print('Input file "{0}" gave incorrect output:\n'.format(input_file.name))
             differ = Differ()
             for line in differ.compare(correct_output, output):
                 print(line, end='')
             print()
             return False
 
-        print(f'Input file "{input_file.name}" finished in {round(run_time, 3)} seconds')
+        input_file.close()
+        output_file.close()
+
+        print('Input file "{0}" finished in {round(run_time, 3)} seconds'.format(input_file.name))
         return run_time
 
     def run_test(self, testName):
-        input_file = next(self.tests_path.glob(f'{testName}-input.txt')).open()
-        output_file = next(self.tests_path.glob(f'{testName}-output.txt')).open()
+        input_file = next(self.tests_path.glob('{0}-input.txt'.format(testName))).open()
+        output_file = next(self.tests_path.glob('{0}-output.txt'.format(testName))).open()
 
         self._test(input_file, output_file)
 
@@ -78,7 +81,7 @@ class TestRunner:
             if output:
                 passed += 1
                 total_time += output
-        print(f"{passed}/{total} tests passed in {round(total_time, 1)} seconds")
+        print("{0}/{1} tests passed in {2} seconds".format(passed, total, round(total_time, 1)))
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
