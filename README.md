@@ -7,7 +7,7 @@ TestRunner is a command line tool to check code against stdin/stdout sample file
 
 ### Installation
 
-TestRunner requires [Python](https://www.python.org/) 3.6+ to run.
+TestRunner requires [Python](https://www.python.org/) 3.5+ to run.
 
 Download the source folder, and extract the archive.
 
