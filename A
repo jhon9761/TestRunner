@@ -1,0 +1,24 @@
+from sys import stdin
+
+file_list = stdin.readlines()
+
+while len(file_list) != 0:
+    if int(file_list[0]) == 0:
+        print(0)
+        print()
+        file_list = file_list[2:]
+
+    else:
+        print(file_list[0], end = '')
+        for n in range(int(file_list[0])):
+            for m in range(1, int(file_list[0])+1):
+                if str(n) in file_list[m]:
+                    print(m-1, end = " ")
+            print()
+        file_list = file_list[int(file_list[0])+1:]
+
+
+            
+
+
+
